@@ -1,32 +1,58 @@
-// eslint-disable-next-line no-unused-vars
-import  { useState } from 'react'
-import './Navbar.css'
-import { assets } from '../../assets/assets'
-
-const Navbar = () => {
-    const [menu,setmenu]=useState("home")
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import { useContext, useState } from "react";
+import "./Navbar.css";
+import { assets } from "../../assets/assets";
+import { Link } from "react-router-dom";
+import { Storecontext } from "../../Context/Storecontext";
+const Navbar = ({setshowLogin}) => {
+  const {gettotalcartamount}=useContext(Storecontext)
+  const [menu, setmenu] = useState("home");
   return (
     <div>
       <div className="navbar">
-        <img src={assets.logo} alt="" className='logo'/>
-        <ul className='navbar-menu'>
-            <li onClick={()=>setmenu("home")} className={menu==="home"?"active":""}>home</li>
-            <li onClick={()=>setmenu("menu")} className={menu==="menu"?"active":""}>menu</li>
-            <li onClick={()=>setmenu("mobile_app")} className={menu==="mobile_app"?"active":""}>mobile-app</li>
-            <li onClick={()=>setmenu("contact-us")} className={menu==="contact-us"?"active":""}>contact us</li>
+        <Link to="/"><img src={assets.logo} alt="" className="logo" /></Link>
+        <ul className="navbar-menu">
+          <Link
+            to="/"
+            onClick={() => setmenu("home")}
+            className={menu === "home" ? "active" : ""}
+          >
+            home
+          </Link>
+          <a
+            href="#explore-menu"
+            onClick={() => setmenu("menu")}
+            className={menu === "menu" ? "active" : ""}
+          >
+            menu
+          </a>
+          <a
+            href="#app-download"
+            onClick={() => setmenu("mobile_app")}
+            className={menu === "mobile_app" ? "active" : ""}
+          >
+            mobile-app
+          </a>
+          <a
+            href="#footer"
+            onClick={() => setmenu("contact-us")}
+            className={menu === "contact-us" ? "active" : ""}
+          >
+            contact us
+          </a>
         </ul>
         <div className="navbar-right">
-            <img src={assets.search_icon} alt=""/>
-            <div className="navbar-search-icon">
-                <img src={assets.basket_icon} alt="" />
-                <div className="dot"></div>
-            </div>
-            <button>Sign in</button>
+          <img src={assets.search_icon} alt="" />
+          <div className="navbar-search-icon">
+            <Link to='/cart'><img src={assets.basket_icon} alt="" /></Link>
+            <div className={gettotalcartamount() === 0?"":"dot"}></div>
+          </div>
+          <button onClick={()=>setshowLogin(true)}>Sign in</button>
         </div>
-    
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
