@@ -4,8 +4,10 @@ import React, { useContext, useState } from "react";
 import "./LoginPopup.css";
 import { assets } from "../../assets/assets";
 import { Storecontext } from "../../Context/Storecontext";
+import axios from 'axios';
+
 const LoginPopup = ({ setshowLogin }) => {
-  const url = useContext(Storecontext);
+  const {url,settoken}= useContext(Storecontext);
   const [currentstate, setcurresntstate] = useState("Login");
   const [data, setdata] = useState({ name: "", email: "", password: "" });
   const onchangehandller = (event) => {
@@ -15,7 +17,21 @@ const LoginPopup = ({ setshowLogin }) => {
   };
   const onlogin = async (event) => {
     event.preventDefault();
-    
+    let newurl=url;
+if(currentstate=="Login"){
+  newurl+="/api/user/login"
+}
+else{
+  newurl+="/api/user/register"
+}
+const response=await axios.post(newurl,data);
+if(response.data.success){
+  settoken(response.data.token);
+  localStorage.setItem("token",response.data.token);
+  setshowLogin(false)
+}else{
+  alert(response.data.message);
+}
   };
 
   //   useEffect(()=>{
