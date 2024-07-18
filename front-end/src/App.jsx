@@ -4,12 +4,12 @@ import Navbar from './components/Navbar/Navbar'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/home/Home'
 import Cart from './pages/cart/Cart'
-import Placeorder from './pages/placeholder/Placeorder'
+import Placeorder from './pages/placeorder/Placeorder'
 import Footer from './components/Footer/Footer'
 import LoginPopup from './components/LoginPopup/LoginPopup'
 
 const App = () => {
-  const [showLogin,setshowLogin]=useState(false)
+  const [showLogin,setshowLogin]=useState(true)
   return (
     <>
     {showLogin?<LoginPopup setshowLogin={setshowLogin}/>:<></>}
